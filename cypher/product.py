@@ -1,5 +1,5 @@
-import transpose
-import vignere
+from . import transpose
+from .  import vignere
 
 def formatText(text):
     finalText = ''
