@@ -41,3 +41,25 @@ def file_decrypt_autokey(encryptedFileName:str, plainFileName:str ,key:str):
     plainFile.close()
     return list(plainBinary)
 
+def plaintext_autokey_encrypt(plainText:bytes, key:str):
+    keyLength = len(key)
+    plainTextLength = len(plainText)
+    result = [0 for i in range(plainTextLength)]
+    for i in range(plainTextLength):
+        if i < keyLength:
+            result[i] = chr((ord(plainText[i]) + ord(key[i % keyLength])) % 256)
+        else:
+            result[i] = chr((ord(plainText[i]) + ord(plainText[i-keyLength])) % 256)
+    return "".join(result)
+
+def plaintext_autokey_decrypt(encryptedBytes:bytes, key:str):
+    keyLength = len(key)
+    encryptedText = list(encryptedBytes)
+    encryptedTextLength = len(encryptedText)
+    result = [0 for i in range(encryptedTextLength)]
+    for i in range(encryptedTextLength):
+        if (i < keyLength):
+            result[i] = chr((ord(encryptedText[i]) - ord(key[i % keyLength])) % 256)
+        else:
+            result[i] = chr((ord(encryptedText[i]) - ord(result[i-keyLength])) % 256)
+    return "".join(result)

@@ -35,3 +35,20 @@ def file_decrypt_extended(encryptedFileName:str, plainFileName:str ,key:str):
     plainFile.write(plainBinary)
     plainFile.close()
     return list(plainBinary)
+
+def plaintext_encrypt_extended(plainText:str, key:str):
+    keyLength = len(key)
+    plainTextLength = len(plainText)
+    result = ["" for i in range(plainTextLength)]
+    for i in range(plainTextLength):
+        result[i] = chr(( ord(plainText[i]) + ord(key[i % keyLength])) % 256)
+    return "".join(result)
+
+def plaintext_decrypt_extended(encryptedText:str, key:str):
+    keyLength = len(key)
+    plainTextLength = len(encryptedText)
+    result = ["" for i in range(plainTextLength)]
+    for i in range(plainTextLength):
+        result[i] = chr(( ord(encryptedText[i]) - ord(key[i % keyLength])) % 256)
+    return "".join(result)
+
