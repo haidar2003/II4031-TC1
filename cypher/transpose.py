@@ -13,7 +13,7 @@ def formatText(text):
             finalText += text[i]
     return finalText
 
-def encrypt(plaintext, key):
+def transpose_encrypt(plaintext, key):
     cyphertext = ''
 
     plaintext = formatText(plaintext)
@@ -36,9 +36,6 @@ def encrypt(plaintext, key):
                 matrix[i][j] = plaintext[currentIdx]
                 currentIdx += 1
 
-    for row in matrix:
-        print(' '.join(row))
-
     for i in range(key):
         for j in range(len(plaintext)//key):
             cyphertext += matrix[j][i]
@@ -46,7 +43,7 @@ def encrypt(plaintext, key):
     return cyphertext
 
 
-def decrypt(cyphertext, key):
+def transpose_decrypt(cyphertext, key):
     plaintext = ''
 
     cyphertext = formatText(cyphertext)
@@ -62,9 +59,6 @@ def decrypt(cyphertext, key):
             if currentIdx < len(cyphertext):
                 matrix[i][j] = cyphertext[currentIdx]
                 currentIdx += 1
-
-    for row in matrix:
-        print(' '.join(row))
 
     for i in range(len(cyphertext)//key):
         for j in range(key):

@@ -8,21 +8,12 @@ def formatText(text):
             finalText += text[i]
     return finalText
 
-def encrypt(plaintext, key):
+def product_encrypt(plaintext, key):
     plaintext = formatText(plaintext)
-    print(plaintext)
-    cyphertext = transpose.encrypt(plaintext, key)
-    print(cyphertext)
-    return vignere.encrypt(cyphertext, key)
+    cyphertext = transpose.transpose_encrypt(plaintext, key)
+    return vignere.vignere_encrypt(cyphertext, key)
 
-def decrypt(cyphertext, key):
+def product_decrypt(cyphertext, key):
     cyphertext = formatText(cyphertext)
-    plaintext = vignere.decrypt(cyphertext, key)
-    return transpose.decrypt(plaintext, key)
-
-print('encrypt')
-
-txt = encrypt('KUCING MANIA MANTAP', 'KUCING')
-print(txt)
-print('decrypt')
-print(decrypt(txt, 'KUCING'))
+    plaintext = vignere.vignere_decrypt(cyphertext, key)
+    return transpose.transpose_decrypt(plaintext, key)

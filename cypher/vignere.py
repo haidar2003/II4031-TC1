@@ -3,8 +3,6 @@ import random
 lowerCase = 'abcdefghijklmnopqrstuvwxyz'
 upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-
-
 def getOrder(alphabet):
     for i in range(len(lowerCase)):
         if alphabet.lower() == lowerCase[i]:
@@ -23,8 +21,8 @@ def repeat(word, target):
     return repeatedWord
 
 
-def encrypt(plaintext, key):
-    ciphertext = ''
+def vignere_encrypt(plaintext, key):
+    cyphertext = ''
 
     if len(key) < len(plaintext):
         key = repeat(key, len(plaintext))
@@ -36,16 +34,16 @@ def encrypt(plaintext, key):
             encryptedChar = (getOrder(plaintext[i]) + getOrder(key[i])) % 26
 
             if plaintext[i].islower():
-                ciphertext += lowerCase[encryptedChar]
+                cyphertext += lowerCase[encryptedChar]
             else:
-                ciphertext += upperCase[encryptedChar]
+                cyphertext += upperCase[encryptedChar]
 
         else:
-            ciphertext += plaintext[i]
+            cyphertext += plaintext[i]
 
-    return ciphertext
+    return cyphertext
 
-def decrypt(cyphertext, key):
+def vignere_decrypt(cyphertext, key):
     plaintext = ''
 
     if len(key) < len(cyphertext):
