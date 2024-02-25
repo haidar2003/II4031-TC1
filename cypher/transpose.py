@@ -1,3 +1,5 @@
+lowerCase = 'abcdefghijklmnopqrstuvwxyz'
+
 import random
 
 def keyGen(seed, range):
@@ -8,7 +10,7 @@ def formatText(text):
     finalText = ''
     for i in range(len(text)):
         if text[i].isalpha():
-            finalText += text[i].upper()
+            finalText += text[i]
     return finalText
 
 def encrypt(plaintext, key):
@@ -18,10 +20,11 @@ def encrypt(plaintext, key):
     
     key = keyGen(key, len(plaintext))
 
-    print(key)
+    dummy = 0
 
     while len(plaintext) % key != 0:
-        plaintext += '_'
+        plaintext += lowerCase[dummy % 26]
+        dummy += 1
 
     matrix = [['.' for i in range(key)] for j in range(len(plaintext)//key)]
 
@@ -38,8 +41,7 @@ def encrypt(plaintext, key):
 
     for i in range(key):
         for j in range(len(plaintext)//key):
-            if matrix[j][i] != '_':
-                cyphertext += matrix[j][i]
+            cyphertext += matrix[j][i]
 
     return cyphertext
 
@@ -50,10 +52,6 @@ def decrypt(cyphertext, key):
     cyphertext = formatText(cyphertext)
     
     key = keyGen(key, len(cyphertext))
-
-    print(key)
-
-    print(cyphertext)
 
     matrix = [['.' for i in range(len(cyphertext)//key)] for j in range(key)]
 
@@ -70,13 +68,6 @@ def decrypt(cyphertext, key):
 
     for i in range(len(cyphertext)//key):
         for j in range(key):
-            if matrix[j][i] != '_':
-                plaintext += matrix[j][i]
+            plaintext += matrix[j][i]
 
     return plaintext
-
-# print('Encrypt')
-# print(encrypt('KUCING MANIA MANTAP MUHAMMAD RAFI HAIDAR MISAL MMM', 'KUCING'))
-
-print('Decrypt')
-print(decrypt(encrypt('KUCING MANIA', 'KUCING'), 'KUCING'))
