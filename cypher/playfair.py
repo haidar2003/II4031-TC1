@@ -98,13 +98,4 @@ def playfair_decrypt(cyphertext, key):
 
 
 
-print(formatKey('JALAN GANESHA SEPULUH'))
-
-for row in makeSquare(formatKey('JALAN GANESHA SEPULUH')):
-    print(' '.join(row))
-
-
-print(encrypt('temui ibu nanti malam', 'JALAN GANESHA SEPULUH'))
-
-print(decrypt(encrypt('temui ibu nanti malam', 'JALAN GANESHA SEPULUH'), 'JALAN GANESHA SEPULUH'))
 
