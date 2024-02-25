@@ -66,12 +66,3 @@ def decrypt(cyphertext, key):
             plaintext += cyphertext[i]
 
     return plaintext
-
-
-print(encrypt('KUCINGMANIAMANTAP', 'KUCING'))
-print(decrypt(encrypt('thisplaintext', 'sony'), 'sony'))
-
-
-# def keyGen(seed):
-#     random.seed(seed)
-#     return random.randint(0, 1000000)
