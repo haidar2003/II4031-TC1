@@ -69,3 +69,15 @@ def affine_decrypt(cyphertext, key):
             plaintext += cyphertext[i]
 
     return plaintext
+
+
+def main():
+    plaintext = str(input("Plaintext: "))
+    key = str(input("Key: "))
+    cyphertext = affine_encrypt(plaintext, key)
+    decryption = affine_decrypt(cyphertext, key)
+
+    print(f'\nEncryption: {cyphertext}\nDecryption: {decryption}')
+
+if __name__ == '__main__':
+    main()

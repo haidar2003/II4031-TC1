@@ -97,14 +97,13 @@ def playfair_decrypt(cyphertext, key):
     return plaintext 
 
 
+def main():
+    plaintext = str(input("Plaintext: "))
+    key = str(input("Key: "))
+    cyphertext = playfair_encrypt(plaintext, key)
+    decryption = playfair_decrypt(cyphertext, key)
 
-print(formatKey('JALAN GANESHA SEPULUH'))
+    print(f'\nEncryption: {cyphertext}\nDecryption: {decryption}')
 
-for row in makeSquare(formatKey('JALAN GANESHA SEPULUH')):
-    print(' '.join(row))
-
-
-print(encrypt('temui ibu nanti malam', 'JALAN GANESHA SEPULUH'))
-
-print(decrypt(encrypt('temui ibu nanti malam', 'JALAN GANESHA SEPULUH'), 'JALAN GANESHA SEPULUH'))
-
+if __name__ == '__main__':
+    main()
