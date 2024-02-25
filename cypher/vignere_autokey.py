@@ -2,7 +2,7 @@ def vignere_autokey_encrypt(plainBytes:bytes, key:str):
     keyLength = len(key)
     plainText = list(plainBytes)
     plainTextLength = len(plainText)
-    result = ["" for i in range(plainTextLength)]
+    result = [0 for i in range(plainTextLength)]
     for i in range(plainTextLength):
         if i < keyLength:
             result[i] = (((plainText[i]) + ord(key[i % keyLength])) % 256)
@@ -14,7 +14,7 @@ def vignere_autokey_decrypt(encryptedBytes:bytes, key:str):
     keyLength = len(key)
     encryptedText = list(encryptedBytes)
     encryptedTextLength = len(encryptedText)
-    result = ["" for i in range(encryptedTextLength)]
+    result = [0 for i in range(encryptedTextLength)]
     for i in range(encryptedTextLength):
         if (i < keyLength):
             result[i] = ((encryptedText[i] - ord(key[i % keyLength])) % 256)

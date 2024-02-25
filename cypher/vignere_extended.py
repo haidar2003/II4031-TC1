@@ -2,7 +2,7 @@ def vignere_extended_encrypt(plainBytes:bytes, key:str):
     keyLength = len(key)
     plainText = list(plainBytes)
     plainTextLength = len(plainText)
-    result = ["" for i in range(plainTextLength)]
+    result = [0 for i in range(plainTextLength)]
     for i in range(plainTextLength):
         result[i] = (((plainText[i]) + ord(key[i % keyLength])) % 256)
     return bytes(result)
@@ -11,7 +11,7 @@ def vignere_extended_decrypt(encryptedBytes:bytes, key:str):
     keyLength = len(key)
     encryptedText = list(encryptedBytes)
     encryptedTextLength = len(encryptedText)
-    result = ["" for i in range(encryptedTextLength)]
+    result = [0 for i in range(encryptedTextLength)]
     for i in range(encryptedTextLength):
         result[i] = ((encryptedText[i] - ord(key[i % keyLength])) % 256)
 
@@ -35,4 +35,3 @@ def file_decrypt_extended(encryptedFileName:str, plainFileName:str ,key:str):
     plainFile.write(plainBinary)
     plainFile.close()
     return list(plainBinary)
-
