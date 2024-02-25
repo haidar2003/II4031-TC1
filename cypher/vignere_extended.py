@@ -17,7 +17,7 @@ def vignere_extended_decrypt(encryptedBytes:bytes, key:str):
 
     return bytes(result)
 
-def file_encrypt(plainFileName:str, encryptedFileName:str ,key:str):
+def file_encrypt_extended(plainFileName:str, encryptedFileName:str ,key:str):
     plainFile = open(plainFileName, "rb")
     plainBinary = plainFile.read()
     plainFile.close()
@@ -26,7 +26,7 @@ def file_encrypt(plainFileName:str, encryptedFileName:str ,key:str):
     encryptedFile.write(encryptedBinary)
     encryptedFile.close()
     return list(plainBinary)
-def file_decrypt(encryptedFileName:str, plainFileName:str ,key:str):
+def file_decrypt_extended(encryptedFileName:str, plainFileName:str ,key:str):
     encryptedFile = open(encryptedFileName, "rb")
     encryptedBinary = encryptedFile.read()
     encryptedFile.close()
