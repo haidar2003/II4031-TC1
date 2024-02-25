@@ -51,7 +51,7 @@ def formatText(text):
     
 
             
-def encrypt(plaintext, key):
+def playfair_encrypt(plaintext, key):
     cyphertext = ''
     playfairSquare = makeSquare(formatKey(key))
     plaintext = formatText(plaintext)
@@ -74,7 +74,7 @@ def encrypt(plaintext, key):
     return cyphertext
 
 
-def decrypt(cyphertext, key):
+def playfair_decrypt(cyphertext, key):
     plaintext = ''
     playfairSquare = makeSquare(formatKey(key))
     cyphertext = formatText(cyphertext)
