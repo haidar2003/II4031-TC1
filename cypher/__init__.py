@@ -1,1 +1,1 @@
-__all__ = ['affine', 'playfair', 'product', 'vignere', 'vignere_extended', 'vignere_autokey', 'transpose']
+__all__ = ['affine', 'playfair', 'vignere', 'vignere_extended', 'vignere_autokey', 'transpose', 'product']

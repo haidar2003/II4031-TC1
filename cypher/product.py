@@ -1,5 +1,5 @@
-import transpose
-import vignere
+from . import transpose
+from .  import vignere
 
 def formatText(text):
     finalText = ''
@@ -20,9 +20,4 @@ def decrypt(cyphertext, key):
     plaintext = vignere.decrypt(cyphertext, key)
     return transpose.decrypt(plaintext, key)
 
-print('encrypt')
 
-txt = encrypt('KUCING MANIA MANTAP', 'KUCING')
-print(txt)
-print('decrypt')
-print(decrypt(txt, 'KUCING'))
