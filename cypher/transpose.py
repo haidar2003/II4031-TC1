@@ -9,7 +9,7 @@ def keyGen(seed, range):
 def formatText(text):
     finalText = ''
     for i in range(len(text)):
-        if text[i].isalpha():
+        if text[i]:
             finalText += text[i]
     return finalText
 
@@ -65,3 +65,15 @@ def transpose_decrypt(cyphertext, key):
             plaintext += matrix[j][i]
 
     return plaintext
+
+
+def main():
+    plaintext = str(input("Plaintext: "))
+    key = str(input("Key: "))
+    cyphertext = transpose_encrypt(plaintext, key)
+    decryption = transpose_decrypt(cyphertext, key)
+
+    print(f'\nEncryption: {cyphertext}\nDecryption: {decryption}')
+
+if __name__ == '__main__':
+    main()

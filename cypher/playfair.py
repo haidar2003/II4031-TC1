@@ -97,5 +97,13 @@ def playfair_decrypt(cyphertext, key):
     return plaintext 
 
 
+def main():
+    plaintext = str(input("Plaintext: "))
+    key = str(input("Key: "))
+    cyphertext = playfair_encrypt(plaintext, key)
+    decryption = playfair_decrypt(cyphertext, key)
 
+    print(f'\nEncryption: {cyphertext}\nDecryption: {decryption}')
 
+if __name__ == '__main__':
+    main()
