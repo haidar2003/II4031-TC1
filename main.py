@@ -11,10 +11,15 @@ def hideWidget(widget):
     widget.pack_forget()
 
 def showWidget(widget):
-    widget.pack(pady=15)
+    widget.pack(pady=15, ipadx = 40)
 
-def uploadFile():
+def uploadFile(): #Implementas pakai askopenfilename() Dicek apakah txt atau bukan, sesuain ama ciphernya 
+    #Kalau berhasil Simpan nama file (path)
     return filedialog.askopenfile()
+
+#bikin tombol submit, sama fungsinya
+
+
 
 def main():
     # Main Window
@@ -52,8 +57,8 @@ def main():
     inputSelection2.pack(pady=15)
 
 
-    inputTextField.pack(pady=15, ipadx=50)
-    inputUploadButton.pack(padx=15)
+    # inputTextField.pack(pady=15, ipadx=50)
+    # inputUploadButton.pack(padx=15)
 
 
     #RUN 
