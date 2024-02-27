@@ -1,5 +1,5 @@
 from . import transpose
-from .  import vignere
+from .  import vigenere
 
 def formatText(text):
     finalText = ''
@@ -11,11 +11,11 @@ def formatText(text):
 def product_encrypt(plaintext, key):
     plaintext = formatText(plaintext)
     cyphertext = transpose.transpose_encrypt(plaintext, key)
-    return vignere.vignere_encrypt(cyphertext, key)
+    return vigenere.vigenere_encrypt(cyphertext, key)
 
 def product_decrypt(cyphertext, key):
     cyphertext = formatText(cyphertext)
-    plaintext = vignere.vignere_decrypt(cyphertext, key)
+    plaintext = vigenere.vigenere_decrypt(cyphertext, key)
     return transpose.transpose_decrypt(plaintext, key)
 
 

@@ -73,8 +73,42 @@ def start_encrypting(target, cypherType, inputType, input, key):
     # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
 
-#bikin tombol submit, sama fungsinya
+def start_decrypting(target, cypher, inputType, input, key):
+    # if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
+    #     match cypher:
+    #         case "Vigenere":
+                 
+    #         case "Extended Vigenere":
+    #             return
+    #         case "Playfair":
+    #             return
+    #         case "Product":
+    #             return
+    #         case "Affine":
+    #             return
+    #         case "Autokey Vigenere":
+    #             return
+    # else:
+    #     if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
+    #         print('idk')
 
+    #     else: 
+    #         if (cypher == 'Extended Vigenere' or cypher == 'Autokey Vigenere'): #Bisa file biner
+    #             print('idk')
+
+    #         else:
+    #             print('error')
+    # return 
+
+    # THIS IS A PLACEHOLDER
+    target.config(state='normal')
+    target.delete(1.0, tk.END) 
+    target.insert(tk.END, f"Selected Cipher: {cypher} {input}")
+
+    # BIAR GAK DIGANTI USER
+    target.config(state=tk.DISABLED)
+
+    
 def main():
     # Main Window
     window = tk.Tk()
@@ -146,59 +180,21 @@ def main():
     inputLabel = tk.Label(window, text="Input:")
     inputLabel.grid(row=6, column=0, pady=15, ipadx = 40)
 
-    textLabel = tk.Label(window, text="Your Text Here")
+    textLabel = tk.Label(window, text="Your Encrypted/Decrypted Text:")
     textLabel.grid(row=9, column=0, pady=15, ipadx = 40)
 
-    textBox = tk.Text(window, state=tk.NORMAL, height=5, width=40)
-    textBox.grid(row=9, column=1, columnspan=2, pady=15, ipadx=40)
+    textBox = tk.Text(window, state=tk.DISABLED, height=5, width=40)
+    textBox.grid(row=10, column=1, columnspan=2, pady=15, ipadx=40)
 
     encryptButton = ttk.Button(window, text="Encrypt", command=lambda: start_encrypting(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
     encryptButton.grid(row=8, column=1, pady=10)
 
+    decryptButton = ttk.Button(window, text="Decrypt", command=lambda: start_decrypting(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
+    encryptButton.grid(row=9, column=1, pady=10)
+
     print(sys.version)
     #RUN 
     window.mainloop()
-
-
-
-# def main():
-#     # Main Window
-#     window = tk.Tk()
-#     window.title("Crypto GUI")
-
-#     # Cipher Selection
-#     cipherLabel = tk.Label(window, text="Cipher : ")
-#     cipherLabel.pack(pady=5)
-#     selectedCipher = tk.StringVar() 
-#     cipherList = ["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
-#     cipherSelection = ttk.OptionMenu(window, selectedCipher, "Vigenere",*cipherList)
-#     cipherSelection.pack(pady=10)
-
-#     # Key
-#     keyLabel = tk.Label(window, text="Key : ")
-#     keyLabel.pack(pady=10)
-#     key = tk.StringVar()
-#     keyField = ttk.Entry(window, textvariable=key)
-#     keyField.pack(pady=5)
-
-#     # Input Text
-#     inputText = tk.StringVar()
-#     inputTextField = ttk.Entry(window, textvariable=inputText)
-#     # Input File
-#     inputUploadButton = ttk.Button(window,text= "Upload", command=uploadFile)
-
-#     # Input Selection
-#     inputLabel = tk.Label(window, text="Input:")
-#     inputLabel.pack(pady=10)
-#     inputSelected = tk.StringVar()
-#     inputList = ["Text", "File" ]
-#     inputSelection1 = ttk.Radiobutton(window, text=inputList[0], variable= inputSelected, value=inputList[0], command=lambda: on_input_type_change(inputUploadButton,inputTextField)) 
-#     inputSelection2 = ttk.Radiobutton(window, text=inputList[1], variable= inputSelected, value=inputList[1], command=lambda: on_input_type_change(inputTextField,inputUploadButton))
-#     inputSelection1.pack(pady=10)
-#     inputSelection2.pack(pady=15)
-
-#     #RUN 
-#     window.mainloop()
 
 if __name__ == '__main__':
     main()
