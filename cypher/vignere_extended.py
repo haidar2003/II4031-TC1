@@ -1,3 +1,5 @@
+import base64
+
 def vignere_extended_encrypt(plainBytes:bytes, key:str):
     keyLength = len(key)
     plainText = list(plainBytes)
@@ -25,7 +27,7 @@ def file_encrypt_extended(plainFileName:str, encryptedFileName:str ,key:str):
     encryptedFile = open(encryptedFileName, "wb")
     encryptedFile.write(encryptedBinary)
     encryptedFile.close()
-    return list(plainBinary)
+    return encryptedBinary
 def file_decrypt_extended(encryptedFileName:str, plainFileName:str ,key:str):
     encryptedFile = open(encryptedFileName, "rb")
     encryptedBinary = encryptedFile.read()
@@ -34,7 +36,7 @@ def file_decrypt_extended(encryptedFileName:str, plainFileName:str ,key:str):
     plainFile = open(plainFileName, "wb")
     plainFile.write(plainBinary)
     plainFile.close()
-    return list(plainBinary)
+    return plainBinary
 
 def plaintext_encrypt_extended(plainText:str, key:str):
     keyLength = len(key)
@@ -51,4 +53,7 @@ def plaintext_decrypt_extended(encryptedText:str, key:str):
     for i in range(plainTextLength):
         result[i] = chr(( ord(encryptedText[i]) - ord(key[i % keyLength])) % 256)
     return "".join(result)
+
+def binary_to_base64(binary:bytes):
+    return(base64.b64encode(binary))
 
