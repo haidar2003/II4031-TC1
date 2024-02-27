@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 import os
-
+import sys
 def on_input_type_change(widgetHide,widgetShow):
     hideWidget(widgetHide)
     showWidget(widgetShow)
@@ -37,14 +37,25 @@ def reset_label(window):
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
 
 def start_encrypting(cypher, inputType, input, key):
-    if inputType == 'Text':
-        print('idk')
-        #enkripsi teks
+    if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
+        match cypher:
+            case "Vigenere":
+                return 
+            case "Extended Vigenere":
+                return
+            case "Playfair":
+                return
+            case "Product":
+                return
+            case "Affine":
+                return
+            case "Autokey Vigenere":
+                return
     else:
         if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
             print('idk')
 
-        else:
+        else: 
             if (cypher == 'Extended Vigenere' or cypher == 'Autokey Vigenere'): #Bisa file biner
                 print('idk')
 
@@ -108,6 +119,7 @@ def main():
     textBox = tk.Text()
     textBox.grid(row=8, column=1, pady=15, ipadx = 40)
 
+    print(sys.version)
     #RUN 
     window.mainloop()
 
