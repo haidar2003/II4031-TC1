@@ -42,6 +42,10 @@ def start_encrypting(target, cypherType, inputType, input, key):
     cyphertext = "ERROR"
     fileContent = cyphertext
     fileContentIsBinary = False
+
+    if (len(input) == 0 or len(key) == 0):
+        return fileContent, fileContentIsBinary
+    
     if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
         match cypherType:
             case "Vigenere":
@@ -112,40 +116,84 @@ def start_encrypting(target, cypherType, inputType, input, key):
     target.config(state=tk.DISABLED)
 
     return fileContent, fileContentIsBinary
-def start_decrypting(target, cypher, inputType, input, key):
-    # if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
-    #     match cypher:
-    #         case "Vigenere":
-                 
-    #         case "Extended Vigenere":
-    #             return
-    #         case "Playfair":
-    #             return
-    #         case "Product":
-    #             return
-    #         case "Affine":
-    #             return
-    #         case "Autokey Vigenere":
-    #             return
-    # else:
-    #     if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
-    #         print('idk')
 
-    #     else: 
-    #         if (cypher == 'Extended Vigenere' or cypher == 'Autokey Vigenere'): #Bisa file biner
-    #             print('idk')
+def start_decrypting(target, cypherType, inputType, input, key):
+    plaintext = "ERROR"
+    fileContent = plaintext
+    fileContentIsBinary = False
 
-    #         else:
-    #             print('error')
-    # return 
+    if (len(input) == 0 or len(key) == 0):
+        return fileContent, fileContentIsBinary
+    
+    if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
+        match cypherType:
+            case "Vigenere":
+                plaintext = vigenere.vigenere_decrypt(input,key) 
+                fileContent = plaintext
+            case "Extended Vigenere":
+                fileContent = vigenere_extended.plaintext_decrypt_extended(input,key)
+                plaintext = vigenere_extended.string_to_base64(fileContent)
+            case "Playfair":
+                plaintext = playfair.playfair_decrypt(input,key)
+                fileContent = plaintext
+            case "Product":
+                plaintext = product.product_decrypt(input,key)
+                fileContent = plaintext
+            case "Affine":
+                plaintext = affine.affine_decrypt(input,key)
+                fileContent = plaintext
+            case "Autokey Vigenere":
+                fileContent = vigenere_autokey.plaintext_autokey_decrypt(input,key)
+                plaintext =  vigenere_extended.string_to_base64(fileContent) 
+    else:
+        if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
+            
+            with open(input,"r") as inputFile:
+                plainTextInput = inputFile.read()
+            match cypherType:
+                case "Vigenere":
+                     plaintext = vigenere.vigenere_decrypt(plainTextInput,key) 
+                     fileContent = plaintext
+                case "Extended Vigenere":
+                    fileContent = vigenere_extended.plaintext_decrypt_extended(plainTextInput,key)
+                    plaintext = vigenere_extended.string_to_base64(fileContent)
+                case "Playfair":
+                    plaintext = playfair.playfair_decrypt(plainTextInput,key)
+                    fileContent = plaintext
+                case "Product":
+                    plaintext = product.product_decrypt(plainTextInput,key)
+                    fileContent = plaintext
+                case "Affine":
+                    plaintext = affine.affine_decrypt(plainTextInput,key)
+                    fileContent = plaintext
+                case "Autokey Vigenere":
+                    fileContent = vigenere_autokey.plaintext_autokey_decrypt(plainTextInput,key)
+                    plaintext =  vigenere_extended.string_to_base64(fileContent)
+
+
+        else: 
+            if (cypherType == 'Extended Vigenere' or cypherType == 'Autokey Vigenere'): #Bisa file biner
+                with open(input,"rb") as inputFile:
+                    binaryInput = inputFile.read()
+                fileContentIsBinary = True
+                if (cypherType == 'Extended Vigenere'):
+                    fileContent = vigenere_extended.vignere_extended_decrypt(binaryInput, key)
+                    plaintext = vigenere_extended.binary_to_base64(fileContent)
+                else :
+                    fileContent = vigenere_autokey.vignere_autokey_decrypt(binaryInput, key)
+                    plaintext = vigenere_extended.binary_to_base64(fileContent)
+            else:
+                print('error')
 
     # THIS IS A PLACEHOLDER
     target.config(state='normal')
     target.delete(1.0, tk.END) 
-    target.insert(tk.END, f"Selected Cipher: {cypher} {input}")
+    target.insert(tk.END, plaintext)
 
     # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
+
+    return fileContent, fileContentIsBinary
 
     
 def main():
@@ -204,6 +252,11 @@ def main():
         nonlocal isResultBinary
         resultContent , isResultBinary = start_encrypting(target, cypherType, inputType, input, key)
 
+    def handle_decrypt(target, cypherType, inputType, input, key):
+        nonlocal resultContent
+        nonlocal isResultBinary
+        resultContent , isResultBinary = start_decrypting(target, cypherType, inputType, input, key)
+
         
     def on_save_button():
         nonlocal isResultBinary
@@ -213,6 +266,7 @@ def main():
         else :
             outputFile = filedialog.asksaveasfile(mode="w",defaultextension=".txt",filetypes=[("Text files","*.txt*")])
         outputFile.write(resultContent)
+        
     # Input Text
     inputText = tk.StringVar()
     inputTextField = ttk.Entry(window, textvariable=inputText)
@@ -232,19 +286,19 @@ def main():
 
 
     inputLabel = tk.Label(window, text="Input:")
-    inputLabel.grid(row=6, column=0, pady=15, ipadx = 40)
+    inputLabel.grid(row=6, column=0, pady=5, ipadx = 40)
 
     textLabel = tk.Label(window, text="Your Encrypted/Decrypted Text:")
-    textLabel.grid(row=10, column=0, pady=15, ipadx = 40)
+    textLabel.grid(row=10, column=0, pady=5, ipadx = 40)
 
-    textBox = tk.Text(window, state=tk.DISABLED, height=5, width=10)
-    textBox.grid(row=10, column=1, columnspan=2, pady=15, ipadx=40)
+    textBox = tk.Text(window, state=tk.DISABLED, height=10, width=20)
+    textBox.grid(row=10, column=1, columnspan=2, pady=5, ipadx=40)
 
     encryptButton = ttk.Button(window, text="Encrypt", command=lambda: handle_encrypt(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
-    encryptButton.grid(row=8, column=1, pady=10)
+    encryptButton.grid(row=8, column=1, pady=3)
 
-    decryptButton = ttk.Button(window, text="Decrypt", command=lambda: start_decrypting(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
-    decryptButton.grid(row=8, column=2, pady=10)
+    decryptButton = ttk.Button(window, text="Decrypt", command=lambda: handle_decrypt(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
+    decryptButton.grid(row=9, column=1, pady=3)
 
     saveButton = ttk.Button(window, text="Save File", command=lambda: on_save_button())
     saveButton.grid(row=11, column=1, pady=10)
