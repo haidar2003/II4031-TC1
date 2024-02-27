@@ -3,7 +3,7 @@ letter = 'ABCDEFGHIKLMNOPQRSTUVWXYZ'
 def formatKey(key):
     finalKey = ''
     for i in range(len(key)):
-        if (key[i].isalpha() and not(key[i] in finalKey) and key[i].lower() != 'j'):
+        if (key[i].isalpha() and not(key[i].upper() in finalKey) and key[i].lower() != 'j'):
             finalKey += key[i].upper()
     for j in range(len(letter)):
         if not(letter[j] in finalKey):
