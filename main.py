@@ -38,7 +38,7 @@ def reset_label(window):
     fileLabel = tk.Label(window, text='                                                                                              ')
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
 
-def start_encrypting(target, cypherType, inputType, input, key):
+def start_encrypting(target, cypherType, inputType, input, key, encodingUsed):
     cyphertext = "ERROR"
     fileContent = cyphertext
     fileContentIsBinary = False
@@ -54,6 +54,8 @@ def start_encrypting(target, cypherType, inputType, input, key):
             case "Extended Vigenere":
                 fileContent = vigenere_extended.plaintext_encrypt_extended(input,key)
                 cyphertext = vigenere_extended.string_to_base64(fileContent)
+                fileContent = fileContent.encode(encodingUsed)
+                fileContentIsBinary = True
             case "Playfair":
                 cyphertext = playfair.playfair_encrypt(input,key)
                 fileContent = cyphertext
@@ -65,7 +67,9 @@ def start_encrypting(target, cypherType, inputType, input, key):
                 fileContent = cyphertext
             case "Autokey Vigenere":
                 fileContent = vigenere_autokey.plaintext_autokey_encrypt(input,key)
-                cyphertext =  vigenere_extended.string_to_base64(fileContent) 
+                cyphertext =  vigenere_extended.string_to_base64(fileContent)
+                fileContent = fileContent.encode(encodingUsed)
+                fileContentIsBinary = True
     else:
         if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
             
@@ -78,6 +82,8 @@ def start_encrypting(target, cypherType, inputType, input, key):
                 case "Extended Vigenere":
                     fileContent = vigenere_extended.plaintext_encrypt_extended(plainTextInput,key)
                     cyphertext = vigenere_extended.string_to_base64(fileContent)
+                    fileContent = fileContent.encode(encodingUsed)
+                    fileContentIsBinary = True
                 case "Playfair":
                     cyphertext = playfair.playfair_encrypt(plainTextInput,key)
                     fileContent = cyphertext
@@ -90,6 +96,9 @@ def start_encrypting(target, cypherType, inputType, input, key):
                 case "Autokey Vigenere":
                     fileContent = vigenere_autokey.plaintext_autokey_encrypt(plainTextInput,key)
                     cyphertext =  vigenere_extended.string_to_base64(fileContent)
+                    fileContent = fileContent.encode(encodingUsed)
+                    fileContentIsBinary = True
+
 
 
         else: 
@@ -117,7 +126,7 @@ def start_encrypting(target, cypherType, inputType, input, key):
 
     return fileContent, fileContentIsBinary
 
-def start_decrypting(target, cypherType, inputType, input, key):
+def start_decrypting(target, cypherType, inputType, input, key, encodingUsed):
     plaintext = "ERROR"
     fileContent = plaintext
     fileContentIsBinary = False
@@ -133,6 +142,8 @@ def start_decrypting(target, cypherType, inputType, input, key):
             case "Extended Vigenere":
                 fileContent = vigenere_extended.plaintext_decrypt_extended(input,key)
                 plaintext = vigenere_extended.string_to_base64(fileContent)
+                fileContent = fileContent.encode(encodingUsed)
+                fileContentIsBinary = True
             case "Playfair":
                 plaintext = playfair.playfair_decrypt(input,key)
                 fileContent = plaintext
@@ -145,6 +156,8 @@ def start_decrypting(target, cypherType, inputType, input, key):
             case "Autokey Vigenere":
                 fileContent = vigenere_autokey.plaintext_autokey_decrypt(input,key)
                 plaintext =  vigenere_extended.string_to_base64(fileContent) 
+                fileContent = fileContent.encode(encodingUsed)
+                fileContentIsBinary = True
     else:
         if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
             
@@ -152,11 +165,13 @@ def start_decrypting(target, cypherType, inputType, input, key):
                 plainTextInput = inputFile.read()
             match cypherType:
                 case "Vigenere":
-                     plaintext = vigenere.vigenere_decrypt(plainTextInput,key) 
-                     fileContent = plaintext
+                    plaintext = vigenere.vigenere_decrypt(plainTextInput,key) 
+                    fileContent = plaintext
                 case "Extended Vigenere":
                     fileContent = vigenere_extended.plaintext_decrypt_extended(plainTextInput,key)
                     plaintext = vigenere_extended.string_to_base64(fileContent)
+                    fileContent = fileContent.encode(encodingUsed)
+                    fileContentIsBinary = True
                 case "Playfair":
                     plaintext = playfair.playfair_decrypt(plainTextInput,key)
                     fileContent = plaintext
@@ -169,7 +184,8 @@ def start_decrypting(target, cypherType, inputType, input, key):
                 case "Autokey Vigenere":
                     fileContent = vigenere_autokey.plaintext_autokey_decrypt(plainTextInput,key)
                     plaintext =  vigenere_extended.string_to_base64(fileContent)
-
+                    fileContent = fileContent.encode(encodingUsed)
+                    fileContentIsBinary = True                    
 
         else: 
             if (cypherType == 'Extended Vigenere' or cypherType == 'Autokey Vigenere'): #Bisa file biner
@@ -200,6 +216,7 @@ def main():
     # Main Window
     window = tk.Tk()
     window.title("Crypto GUI")
+    defaultEncoding = sys.getdefaultencoding()
 
     fileLabel = tk.Label(window, text='')
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
@@ -250,12 +267,14 @@ def main():
     def handle_encrypt(target, cypherType, inputType, input, key):
         nonlocal resultContent
         nonlocal isResultBinary
-        resultContent , isResultBinary = start_encrypting(target, cypherType, inputType, input, key)
+        nonlocal defaultEncoding
+        resultContent , isResultBinary = start_encrypting(target, cypherType, inputType, input, key,defaultEncoding)
 
     def handle_decrypt(target, cypherType, inputType, input, key):
         nonlocal resultContent
         nonlocal isResultBinary
-        resultContent , isResultBinary = start_decrypting(target, cypherType, inputType, input, key)
+        nonlocal defaultEncoding
+        resultContent , isResultBinary = start_decrypting(target, cypherType, inputType, input, key,defaultEncoding)
 
         
     def on_save_button():
@@ -264,6 +283,7 @@ def main():
         if (isResultBinary):
             outputFile = filedialog.asksaveasfile(mode="wb",filetypes=[("All files","*.*")])
         else :
+            print("AHAH")
             outputFile = filedialog.asksaveasfile(mode="w",defaultextension=".txt",filetypes=[("Text files","*.txt*")])
         outputFile.write(resultContent)
         
@@ -305,7 +325,7 @@ def main():
 
 
 
-    print(sys.version)
+
     #RUN 
     window.mainloop()
 
