@@ -42,14 +42,19 @@ def formatText(text):
         nextIdx = 1
         while nextIdx < len(finalText):
             if finalText[currIdx].upper() == finalText[nextIdx].upper():
-                finalText = finalText[:currIdx + 1].upper() + 'X' + finalText[currIdx + 1:].upper()
+                if finalText[currIdx].upper() == 'X' and finalText[nextIdx].upper() == 'X':
+                    finalText = finalText[:currIdx + 1].upper() + 'Z' + finalText[currIdx + 1:].upper()
+                else:
+                    finalText = finalText[:currIdx + 1].upper() + 'X' + finalText[currIdx + 1:].upper()
             currIdx += 1
             nextIdx += 1
         if len(finalText) % 2 != 0:
-            finalText += 'X'
+            if finalText[len(finalText) - 1] == 'X':
+                finalText += 'Z'
+            else:
+                finalText += 'X'
         return finalText
     
-
             
 def playfair_encrypt(plaintext, key):
     cyphertext = ''

@@ -5,6 +5,8 @@ from tkinter import filedialog
 import os
 import sys
 
+
+
 def on_input_type_change(widgetHide,widgetShow):
     hideWidget(widgetHide)
     showWidget(widgetShow)
@@ -63,11 +65,12 @@ def start_encrypting(target, cypherType, inputType, input, key):
                 print('error')
     
 
+    # THIS IS A PLACEHOLDER
     target.config(state='normal')
     target.delete(1.0, tk.END) 
     target.insert(tk.END, cyphertext)
 
-
+    # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
 
 #bikin tombol submit, sama fungsinya

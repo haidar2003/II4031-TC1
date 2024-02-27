@@ -24,7 +24,7 @@ def repeat(word, target):
     return repeatedWord
 
 
-def vignere_encrypt(plaintext, key):
+def vigenere_encrypt(plaintext, key):
     cyphertext = ''
 
     if len(key) < len(plaintext):
@@ -41,34 +41,12 @@ def vignere_encrypt(plaintext, key):
             else:
                 cyphertext += upperCase[encryptedChar]
 
-        else:
-            cyphertext += plaintext[i]
-
-    return cyphertext
-def vignere_encrypt(plaintext, key):
-    cyphertext = ''
-
-    if len(key) < len(plaintext):
-        key = repeat(key, len(plaintext))
-    else:
-        key = key[:len(plaintext)]
-
-    for i in range(len(plaintext)):
-        if (plaintext[i].isalpha()):
-            encryptedChar = (getOrder(plaintext[i]) + getOrder(key[i])) % 26
-
-            if plaintext[i].islower():
-                cyphertext += lowerCase[encryptedChar]
-            else:
-                cyphertext += upperCase[encryptedChar]
-
-        else:
-            cyphertext += plaintext[i]
+        # else:
+        #     cyphertext += plaintext[i]
 
     return cyphertext
 
-
-def vignere_decrypt(cyphertext, key):
+def vigenere_decrypt(cyphertext, key):
     plaintext = ''
 
     if len(key) < len(cyphertext):
@@ -94,8 +72,8 @@ def vignere_decrypt(cyphertext, key):
 def main():
     plaintext = str(input("Plaintext: "))
     key = str(input("Key: "))
-    cyphertext = vignere_encrypt(plaintext, key)
-    decryption = vignere_decrypt(cyphertext, key)
+    cyphertext = vigenere_encrypt(plaintext, key)
+    decryption = vigenere_decrypt(cyphertext, key)
 
     print(f'\nEncryption: {cyphertext}\nDecryption: {decryption}')
 
