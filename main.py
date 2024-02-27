@@ -62,11 +62,11 @@ def start_encrypting(target, cypher, inputType, input, key):
     #             print('error')
     # return 
 
-    # Placeholder: Display the selected cipher name in the text box
-    target.delete(1.0, tk.END)  # Clear existing content
+    target.config(state='normal')
+    target.delete(1.0, tk.END) 
     target.insert(tk.END, f"Selected Cipher: {cypher} {input}")
 
-    # Disable text box editing
+
     target.config(state=tk.DISABLED)
 
 #bikin tombol submit, sama fungsinya
