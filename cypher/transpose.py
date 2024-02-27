@@ -9,7 +9,7 @@ def keyGen(seed, range):
 def formatText(text):
     finalText = ''
     for i in range(len(text)):
-        if text[i]:
+        if text[i].isalpha():
             finalText += text[i]
     return finalText
 

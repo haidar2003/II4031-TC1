@@ -64,11 +64,12 @@ def start_encrypting(target, cypher, inputType, input, key):
     #             print('error')
     # return 
 
+    # THIS IS A PLACEHOLDER
     target.config(state='normal')
     target.delete(1.0, tk.END) 
     target.insert(tk.END, f"Selected Cipher: {cypher} {input}")
 
-
+    # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
 
 #bikin tombol submit, sama fungsinya

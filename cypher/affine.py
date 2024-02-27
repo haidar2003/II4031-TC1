@@ -37,8 +37,8 @@ def affine_encrypt(plaintext, key):
             else:
                 cyphertext += upperCase[encryptedChar]
 
-        else:
-            cyphertext += plaintext[i]
+        # else:
+        #     cyphertext += plaintext[i]
 
     return cyphertext
 
@@ -65,8 +65,8 @@ def affine_decrypt(cyphertext, key):
             else:
                 plaintext += upperCase[encryptedChar]
 
-        else:
-            plaintext += cyphertext[i]
+        # else:
+        #     plaintext += cyphertext[i]
 
     return plaintext
 
