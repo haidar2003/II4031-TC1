@@ -39,12 +39,13 @@ def reset_label(window):
 
 def start_encrypting(target, cypherType, inputType, input, key):
     cyphertext = "ERROR"
+    fileContent = "ERROR"
     if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
         match cypherType:
             case "Vigenere":
-                 cyphertext = vignere.vignere_encrypt(input,key) 
+                cyphertext = vigenere.vigenere_encrypt(input,key) 
             case "Extended Vigenere":
-                return
+                cyphertext = vigenere_extended.string_to_base64(vigenere_extended.plaintext_encrypt_extended(input,key))
             case "Playfair":
                 cyphertext = playfair.playfair_encrypt(input,key)
             case "Product":
@@ -52,10 +53,26 @@ def start_encrypting(target, cypherType, inputType, input, key):
             case "Affine":
                 cyphertext = affine.affine_encrypt(input,key)
             case "Autokey Vigenere":
-                return
+                cyphertext =  vigenere_extended.string_to_base64(vigenere_autokey.plaintext_autokey_encrypt(input,key))
     else:
         if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
-            print('idk')
+            
+            with open(input,"r") as inputFile:
+                plainTextInput = inputFile.read()
+            match cypherType:
+                case "Vigenere":
+                     cyphertext = vigenere.vigenere_encrypt(plainTextInput,key) 
+                case "Extended Vigenere":
+                    return
+                case "Playfair":
+                    cyphertext = playfair.playfair_encrypt(plainTextInput,key)
+                case "Product":
+                    cyphertext = product.product_encrypt(plainTextInput,key)
+                case "Affine":
+                    cyphertext = affine.affine_encrypt(plainTextInput,key)
+                case "Autokey Vigenere":
+                    return      
+
 
         else: 
             if (cypherType == 'Extended Vigenere' or cypherType == 'Autokey Vigenere'): #Bisa file biner

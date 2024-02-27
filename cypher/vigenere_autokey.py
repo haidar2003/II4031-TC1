@@ -41,7 +41,7 @@ def file_decrypt_autokey(encryptedFileName:str, plainFileName:str ,key:str):
     plainFile.close()
     return list(plainBinary)
 
-def plaintext_autokey_encrypt(plainText:bytes, key:str):
+def plaintext_autokey_encrypt(plainText:str, key:str):
     keyLength = len(key)
     plainTextLength = len(plainText)
     result = [0 for i in range(plainTextLength)]
@@ -52,7 +52,7 @@ def plaintext_autokey_encrypt(plainText:bytes, key:str):
             result[i] = chr((ord(plainText[i]) + ord(plainText[i-keyLength])) % 256)
     return "".join(result)
 
-def plaintext_autokey_decrypt(encryptedBytes:bytes, key:str):
+def plaintext_autokey_decrypt(encryptedBytes:str, key:str):
     keyLength = len(key)
     encryptedText = list(encryptedBytes)
     encryptedTextLength = len(encryptedText)

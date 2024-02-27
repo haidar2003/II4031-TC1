@@ -57,3 +57,6 @@ def plaintext_decrypt_extended(encryptedText:str, key:str):
 def binary_to_base64(binary:bytes):
     return(base64.b64encode(binary))
 
+def string_to_base64(string:str):
+    return(base64.b64encode(string.encode("utf-8")))
+
