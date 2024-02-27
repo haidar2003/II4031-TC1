@@ -37,37 +37,38 @@ def reset_label(window):
     fileLabel = tk.Label(window, text='                                                                                              ')
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
 
-def start_encrypting(target, cypher, inputType, input, key):
-    # if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
-    #     match cypher:
-    #         case "Vigenere":
-                 
-    #         case "Extended Vigenere":
-    #             return
-    #         case "Playfair":
-    #             return
-    #         case "Product":
-    #             return
-    #         case "Affine":
-    #             return
-    #         case "Autokey Vigenere":
-    #             return
-    # else:
-    #     if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
-    #         print('idk')
+def start_encrypting(target, cypherType, inputType, input, key):
+    cyphertext = "ERROR"
+    if inputType == 'Text': #["Vigenere","Extended Vigenere","Playfair","Product","Affine","Autokey Vigenere"]
+        match cypherType:
+            case "Vigenere":
+                 cyphertext = vignere.vignere_encrypt(input,key) 
+            case "Extended Vigenere":
+                return
+            case "Playfair":
+                cyphertext = playfair.playfair_encrypt(input,key)
+            case "Product":
+                cyphertext = product.product_encrypt(input,key)
+            case "Affine":
+                cyphertext = affine.affine_encrypt(input,key)
+            case "Autokey Vigenere":
+                return
+    else:
+        if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
+            print('idk')
 
-    #     else: 
-    #         if (cypher == 'Extended Vigenere' or cypher == 'Autokey Vigenere'): #Bisa file biner
-    #             print('idk')
+        else: 
+            if (cypherType == 'Extended Vigenere' or cypherType == 'Autokey Vigenere'): #Bisa file biner
+                print('idk')
 
-    #         else:
-    #             print('error')
-    # return 
+            else:
+                print('error')
+    
 
     # THIS IS A PLACEHOLDER
     target.config(state='normal')
     target.delete(1.0, tk.END) 
-    target.insert(tk.END, f"Selected Cipher: {cypher} {input}")
+    target.insert(tk.END, cyphertext)
 
     # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
