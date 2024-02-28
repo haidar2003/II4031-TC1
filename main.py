@@ -355,7 +355,6 @@ def main():
     saveButton = ttk.Button(window, text="Save File", command=lambda: on_save_button())
     saveButton.grid(row=12, column=1, pady=10)
 
-    
     #RUN 
     window.mainloop()
 
