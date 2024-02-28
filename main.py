@@ -17,23 +17,6 @@ def hideWidget(widget):
 def showWidget(widget):
     widget.grid(row=6, column=1, pady=15, ipadx = 40)
 
-
-# def uploadFile(window, cypher): 
-#     filename = filedialog.askopenfilename()
-#     is_txt = True
-    
-#     if os.path.splitext(filename)[1] != ".txt":
-#         is_txt = False
-
-#     if not(is_txt):
-#         if not(cypher == 'Extended Vigenere' or cypher == 'Autokey Vigenere'):
-#             filename = "Error: Please upload a .txt file"
-
-#     fileLabel = tk.Label(window, text=filename)
-#     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
-
-#     return filename
-
 def reset_label(window):
     fileLabel = tk.Label(window, text='                                                                                              ')
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
@@ -301,7 +284,16 @@ def main():
     decryptButton.grid(row=9, column=1, pady=3)
 
     saveButton = ttk.Button(window, text="Save File", command=lambda: on_save_button())
-    saveButton.grid(row=11, column=1, pady=10)
+    saveButton.grid(row=12, column=1, pady=10)
+
+    textLabel = tk.Label(window, text="Your Encrypted/Decrypted Text (Base64):")
+    textLabel.grid(row=11, column=0, pady=5, ipadx = 40)
+
+    textBox = tk.Text(window, state=tk.DISABLED, height=10, width=20)
+    textBox.grid(row=11, column=1, columnspan=2, pady=5, ipadx=40)
+
+
+
 
 
 
