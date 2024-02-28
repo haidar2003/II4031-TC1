@@ -61,7 +61,7 @@ def start_encrypting(target, target64, cypherType, inputType, input, key, encodi
     else:
         if os.path.splitext(input)[1] == ".txt": #Berarti  -> enkripsi isinya, jangan filenya
             
-            with open(input,"r") as inputFile:
+            with open(input,"r", encoding=encodingUsed) as inputFile:
                 plainTextInput = inputFile.read()
             match cypherType:
                 case "Vigenere":
