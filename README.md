@@ -26,6 +26,7 @@ Autokey Vigenere | ASCII (256 karakter) | Ya
    > python main.py
    > 
 tidak perlu menjalankan virtual environment karena hanya memakai built-in package Python
+
 4. Pilih metode cipher yang diinginkan
 5. Masukkan key berupa string sembarang
 6. Pilih tipe masukan (berkas atau teks)
