@@ -99,7 +99,7 @@ def start_encrypting(target, target64, cypherType, inputType, input, key, encodi
                     cyphertext = vigenere_extended.binary_to_base64(fileContent)
                 else :
                     fileContent = vigenere_autokey.vignere_autokey_encrypt(binaryInput, key)
-                    cyphertext = vigenere_extended.binary_to_base64(fileContent)
+                    cyphertext = vigenere_extended.binary_to_base64(fileContent.decode(encodingUsed))
             else:
                 print('error')
     
@@ -115,7 +115,7 @@ def start_encrypting(target, target64, cypherType, inputType, input, key, encodi
         target.insert(tk.END, cyphertext)
         target64.insert(tk.END, str_to_base64(cyphertext))
     else:
-        target.insert(tk.END, fileContent)
+        target.insert(tk.END, fileContent.decode(encodingUsed))
         target64.insert(tk.END, cyphertext)  
 
     # BIAR GAK DIGANTI USER
@@ -211,7 +211,7 @@ def start_decrypting(target, target64, cypherType, inputType, input, key, encodi
         target.insert(tk.END, plaintext)
         target64.insert(tk.END, str_to_base64(plaintext))
     else:
-        target.insert(tk.END, fileContent)
+        target.insert(tk.END, fileContent.decode(encodingUsed))
         target64.insert(tk.END, plaintext)  
 
     # BIAR GAK DIGANTI USER
