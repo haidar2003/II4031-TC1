@@ -25,7 +25,6 @@ def repeat(word, target):
 
 def vigenere_encrypt(plaintext, key):
     plaintext = plaintext.replace(" ", "")
-    print(plaintext)
     cyphertext = ''
 
     if len(key) < len(plaintext):
