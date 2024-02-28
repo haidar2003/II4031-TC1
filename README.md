@@ -24,7 +24,7 @@ Autokey Vigenere | ASCII (256 karakter) | Ya
 2. Buka direktori yang sudah berisi kode sumber melalui CLI seperti terminal atau command prompt, atau buka direktori kode sumber di aplikasi IDE seperti Visual Studio Code
 3. Jalankan berkas main.py, apabila menggunakan command prompt, ketik
    > python main.py
-   tidak perlu menjalankan virtual environment karena hanya memakai built-in package Python
+tidak perlu menjalankan virtual environment karena hanya memakai built-in package Python
 4. Pilih metode cipher yang diinginkan
 5. Masukkan key berupa string sembarang
 6. Pilih tipe masukan (berkas atau teks)
