@@ -7,9 +7,9 @@ import sys
 import base64
 
 def str_to_base64(input_str):
-    input_str_bytes = input_str.encode('utf-8')
+    input_str_bytes = input_str.encode('latin1')
     base64_bytes = base64.b64encode(input_str_bytes)
-    base64_str = base64_bytes.decode('utf-8')
+    base64_str = base64_bytes.decode('latin1')
     return base64_str
 
 def on_input_type_change(widgetHide,widgetShow):
@@ -225,7 +225,7 @@ def main():
     # Main Window
     window = tk.Tk()
     window.title("Crypto GUI")
-    defaultEncoding = sys.getdefaultencoding()
+    defaultEncoding = "latin1"
 
     window_width =700
     window_height = 800
