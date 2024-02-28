@@ -99,7 +99,7 @@ def start_encrypting(target, target64, cypherType, inputType, input, key, encodi
                     cyphertext = vigenere_extended.binary_to_base64(fileContent)
                 else :
                     fileContent = vigenere_autokey.vignere_autokey_encrypt(binaryInput, key)
-                    cyphertext = vigenere_extended.binary_to_base64(fileContent.decode(encodingUsed))
+                    cyphertext = vigenere_extended.binary_to_base64(fileContent)
             else:
                 print('error')
     
