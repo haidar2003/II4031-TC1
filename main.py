@@ -4,8 +4,13 @@ from tkinter import ttk
 from tkinter import filedialog
 import os
 import sys
+import base64
 
-
+def str_to_base64(input_str):
+    input_str_bytes = input_str.encode('utf-8')
+    base64_bytes = base64.b64encode(input_str_bytes)
+    base64_str = base64_bytes.decode('utf-8')
+    return base64_str
 
 def on_input_type_change(widgetHide,widgetShow):
     hideWidget(widgetHide)
@@ -21,7 +26,7 @@ def reset_label(window):
     fileLabel = tk.Label(window, text='                                                                                              ')
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
 
-def start_encrypting(target, cypherType, inputType, input, key, encodingUsed):
+def start_encrypting(target, target64, cypherType, inputType, input, key, encodingUsed):
     cyphertext = "ERROR"
     fileContent = cyphertext
     fileContentIsBinary = False
@@ -99,17 +104,27 @@ def start_encrypting(target, cypherType, inputType, input, key, encodingUsed):
                 print('error')
     
 
-    # THIS IS A PLACEHOLDER
+    # DIMUNCULIN DI TEXTBOX
     target.config(state='normal')
     target.delete(1.0, tk.END) 
-    target.insert(tk.END, cyphertext)
+
+    target64.config(state='normal')
+    target64.delete(1.0, tk.END) 
+
+    if not(fileContentIsBinary):
+        target.insert(tk.END, cyphertext)
+        target64.insert(tk.END, str_to_base64(cyphertext))
+    else:
+        target.insert(tk.END, fileContent)
+        target64.insert(tk.END, cyphertext)  
 
     # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
+    target64.config(state=tk.DISABLED)
 
     return fileContent, fileContentIsBinary
 
-def start_decrypting(target, cypherType, inputType, input, key, encodingUsed):
+def start_decrypting(target, target64, cypherType, inputType, input, key, encodingUsed):
     plaintext = "ERROR"
     fileContent = plaintext
     fileContentIsBinary = False
@@ -184,13 +199,24 @@ def start_decrypting(target, cypherType, inputType, input, key, encodingUsed):
             else:
                 print('error')
 
-    # THIS IS A PLACEHOLDER
+
+    # DIMUNCULIN DI TEXTBOX
     target.config(state='normal')
     target.delete(1.0, tk.END) 
-    target.insert(tk.END, plaintext)
+
+    target64.config(state='normal')
+    target64.delete(1.0, tk.END) 
+
+    if not(fileContentIsBinary):
+        target.insert(tk.END, plaintext)
+        target64.insert(tk.END, str_to_base64(plaintext))
+    else:
+        target.insert(tk.END, fileContent)
+        target64.insert(tk.END, plaintext)  
 
     # BIAR GAK DIGANTI USER
     target.config(state=tk.DISABLED)
+    target64.config(state=tk.DISABLED)
 
     return fileContent, fileContentIsBinary
 
@@ -200,6 +226,18 @@ def main():
     window = tk.Tk()
     window.title("Crypto GUI")
     defaultEncoding = sys.getdefaultencoding()
+
+    window_width =700
+    window_height = 800
+    
+    window.minsize(window_width, window_height)
+    window.maxsize(window_width, window_height)
+
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    x_coordinate = (screen_width - window_width) // 2
+    y_coordinate = (screen_height - window_height) // 2
+    window.geometry(f"{window_width}x{window_height}+{x_coordinate}+{y_coordinate}")
 
     fileLabel = tk.Label(window, text='')
     fileLabel.grid(row=7, column=1, pady=15, ipadx = 40)
@@ -219,9 +257,11 @@ def main():
     keyField = ttk.Entry(window, textvariable=key)
     keyField.grid(row=1, column=1, pady=5)
 
+    # Nested Functions (We're bad at programming)
     currentFile = "Error"
     resultContent = "Error"
     isResultBinary = False
+
     def uploadFile(cypher): 
         nonlocal currentFile
         nonlocal window
@@ -247,17 +287,17 @@ def main():
         else:
             return currentFile
 
-    def handle_encrypt(target, cypherType, inputType, input, key):
+    def handle_encrypt(target, target64, cypherType, inputType, input, key):
         nonlocal resultContent
         nonlocal isResultBinary
         nonlocal defaultEncoding
-        resultContent , isResultBinary = start_encrypting(target, cypherType, inputType, input, key,defaultEncoding)
+        resultContent , isResultBinary = start_encrypting(target, target64, cypherType, inputType, input, key,defaultEncoding)
 
-    def handle_decrypt(target, cypherType, inputType, input, key):
+    def handle_decrypt(target, target64, cypherType, inputType, input, key):
         nonlocal resultContent
         nonlocal isResultBinary
         nonlocal defaultEncoding
-        resultContent , isResultBinary = start_decrypting(target, cypherType, inputType, input, key,defaultEncoding)
+        resultContent , isResultBinary = start_decrypting(target, target64, cypherType, inputType, input, key,defaultEncoding)
 
         
     def on_save_button():
@@ -266,7 +306,6 @@ def main():
         if (isResultBinary):
             outputFile = filedialog.asksaveasfile(mode="wb",filetypes=[("All files","*.*")])
         else :
-            print("AHAH")
             outputFile = filedialog.asksaveasfile(mode="w",defaultextension=".txt",filetypes=[("Text files","*.txt*")])
         outputFile.write(resultContent)
         
@@ -287,37 +326,36 @@ def main():
     inputSelection2 = ttk.Radiobutton(window, text=inputList[1], variable= inputSelected, value=inputList[1], command=lambda: (on_input_type_change(inputTextField,inputUploadButton), inputUploadButton.grid(row=6, column=1, pady=15, ipadx = 40)))
     inputSelection2.grid(row=5, column=1, pady=15)
 
-
     inputLabel = tk.Label(window, text="Input:")
     inputLabel.grid(row=6, column=0, pady=5, ipadx = 40)
 
+    # Result
     textLabel = tk.Label(window, text="Your Encrypted/Decrypted Text:")
     textLabel.grid(row=10, column=0, pady=5, ipadx = 40)
 
     textBox = tk.Text(window, state=tk.DISABLED, height=10, width=20)
     textBox.grid(row=10, column=1, columnspan=2, pady=5, ipadx=40)
 
-    encryptButton = ttk.Button(window, text="Encrypt", command=lambda: handle_encrypt(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
-    encryptButton.grid(row=8, column=1, pady=3)
-
-    decryptButton = ttk.Button(window, text="Decrypt", command=lambda: handle_decrypt(textBox, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
-    decryptButton.grid(row=9, column=1, pady=3)
-
-    saveButton = ttk.Button(window, text="Save File", command=lambda: on_save_button())
-    saveButton.grid(row=12, column=1, pady=10)
-
+    # Result (Base64)
     textLabel = tk.Label(window, text="Your Encrypted/Decrypted Text (Base64):")
     textLabel.grid(row=11, column=0, pady=5, ipadx = 40)
 
-    textBox = tk.Text(window, state=tk.DISABLED, height=10, width=20)
-    textBox.grid(row=11, column=1, columnspan=2, pady=5, ipadx=40)
+    textBox64 = tk.Text(window, state=tk.DISABLED, height=10, width=20)
+    textBox64.grid(row=11, column=1, columnspan=2, pady=5, ipadx=40)
 
+    # Encrypt Button
+    encryptButton = ttk.Button(window, text="Encrypt", command=lambda: handle_encrypt(textBox, textBox64, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
+    encryptButton.grid(row=8, column=1, pady=3)
 
+    # Decrypt Button
+    decryptButton = ttk.Button(window, text="Decrypt", command=lambda: handle_decrypt(textBox, textBox64, selectedCipher.get(), inputSelected.get(), handle_input(inputSelected.get()), key.get()))
+    decryptButton.grid(row=9, column=1, pady=3)
 
+    # Save Button
+    saveButton = ttk.Button(window, text="Save File", command=lambda: on_save_button())
+    saveButton.grid(row=12, column=1, pady=10)
 
-
-
-
+    
     #RUN 
     window.mainloop()
 
