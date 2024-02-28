@@ -8,7 +8,7 @@ def formatKey(key):
     for j in range(len(letter)):
         if not(letter[j] in finalKey):
             finalKey += letter[j].upper()
-    return finalKey
+    return finalKey.replace(" ", "")
 
 def makeSquare(key):
     square = [['.' for i in range(5)] for j in range(5)]
@@ -36,7 +36,7 @@ def formatText(text):
     
     if len(finalText) == 1:
         finalText += 'X'
-        return finalText
+        return finalText.replace(" ", "")
     else:
         currIdx = 0
         nextIdx = 1
