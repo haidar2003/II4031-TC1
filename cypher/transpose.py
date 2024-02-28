@@ -11,7 +11,7 @@ def formatText(text):
     for i in range(len(text)):
         if text[i].isalpha():
             finalText += text[i]
-    return finalText
+    return finalText.replace(" ", "")
 
 def transpose_encrypt(plaintext, key):
     cyphertext = ''

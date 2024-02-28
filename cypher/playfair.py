@@ -53,7 +53,7 @@ def formatText(text):
                 finalText += 'Z'
             else:
                 finalText += 'X'
-        return finalText
+        return finalText.replace(" ", "")
     
             
 def playfair_encrypt(plaintext, key):

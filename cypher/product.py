@@ -6,17 +6,17 @@ def formatText(text):
     for i in range(len(text)):
         if text[i].isalpha():
             finalText += text[i]
-    return finalText
+    return finalText.replace(" ", "")
 
 def product_encrypt(plaintext, key):
     plaintext = formatText(plaintext)
-    cyphertext = transpose_encrypt(plaintext, key)
-    return vigenere_encrypt(cyphertext, key)
+    cyphertext = transpose.transpose_encrypt(plaintext, key)
+    return vigenere.vigenere_encrypt(cyphertext, key)
 
 def product_decrypt(cyphertext, key):
     cyphertext = formatText(cyphertext)
-    plaintext = vigenere_decrypt(cyphertext, key)
-    return transpose_decrypt(plaintext, key)
+    plaintext = vigenere.vigenere_decrypt(cyphertext, key)
+    return transpose.transpose_decrypt(plaintext, key)
 
 
 def main():
