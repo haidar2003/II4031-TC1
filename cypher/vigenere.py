@@ -3,6 +3,13 @@ import random
 lowerCase = 'abcdefghijklmnopqrstuvwxyz'
 upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
+def formatText(text):
+    finalText = ''
+    for i in range(len(text)):
+        if text[i].isalpha():
+            finalText += text[i]
+    return finalText.replace(" ", "")
+
 def getOrder(alphabet):
     if alphabet.isalpha():
         for i in range(len(lowerCase)):
@@ -24,7 +31,8 @@ def repeat(word, target):
     return repeatedWord
 
 def vigenere_encrypt(plaintext, key):
-    plaintext = plaintext.replace(" ", "")
+    plaintext = formatText(plaintext)
+    key = formatText(key)
     cyphertext = ''
 
     if len(key) < len(plaintext):
@@ -47,7 +55,8 @@ def vigenere_encrypt(plaintext, key):
     return cyphertext
 
 def vigenere_decrypt(cyphertext, key):
-    cyphertext = cyphertext.replace(" ", "")
+    cyphertext = formatText(cyphertext)
+    key = formatText(key)
     plaintext = ''
 
     if len(key) < len(cyphertext):
